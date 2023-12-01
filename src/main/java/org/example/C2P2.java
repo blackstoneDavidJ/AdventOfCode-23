@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
-
 public class C2P2 {
     private static final String PATH = "src/inputfiles/c2.txt";
 
@@ -12,8 +11,8 @@ public class C2P2 {
         //X = LOSE, Y = DRAW, Z = WIN
         //x = rock y = paper z = scissors
         HashMap<String,Integer> values = new HashMap<>();
-        values.put("AX",1); // pick x
-        values.put("AY",6); // pick z
+        values.put("AX",3); // pick z
+        values.put("AY",4); // pick z
         values.put("AZ",8); // pick y
 
         values.put("BX",1); // pick X
