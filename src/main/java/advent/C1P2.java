@@ -2,6 +2,8 @@ package advent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -29,7 +31,7 @@ public class C1P2
                 score = Integer.parseInt(str.toString());
             }
             total += score;
-            //System.out.println(line);
+            System.out.println(line);
         }
         scanner.close();
         System.out.println(total);
@@ -37,6 +39,7 @@ public class C1P2
 
     private static String findNumbers(String line) {
         HashMap<Integer, String> map = new HashMap<>();
+        ArrayList<Pair> pairs = new ArrayList<>();
         map.put(1,"one");
         map.put(2,"two");
         map.put(3,"three");
@@ -48,15 +51,28 @@ public class C1P2
         map.put(9,"nine");
         for (int i = 1; i <= 9; i++) {
             String currStr = map.get(i);
-            if (line.contains(currStr)) {
-                int index = line.indexOf(currStr);
-                String newLine = String.valueOf(i) +line;
-                System.out.println(newLine);
-            }
+            if (line.contains(currStr))
+                pairs.add(new Pair(i,line.indexOf(currStr)));
         }
-
-
+        StringBuilder str = new StringBuilder(line);
+        for (Pair pair : pairs) {
+            str.setCharAt(pair.index, Character.forDigit(pair.num, 10));
+        }
+        System.out.println(str);
+        System.out.println("---");
         return line;
     }
+    private static class Pair {
+        public int num;
+        public int index;
 
+        public Pair(int num, int index) {
+            this.num = num;
+            this.index = index;
+        }
+
+        public String toString() {
+            return num +" " +index;
+        }
+    }
 }
