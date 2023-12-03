@@ -18,18 +18,23 @@ public class C2P2
             String[] subsets = game[1].split(";");
             int red = 0, green = 0, blue = 0;
             boolean possible = true;
+            int gameSum = 0;
             for(String subset : subsets) {
                 String[] items = subset.split(", ");
                 for (String i : items) {
                     String[] ind = i.trim().split(" ");
                     if (ind[1].contains("red") && Integer.parseInt(ind[0]) > red)
-                        possible = false;
+                        red = Integer.parseInt(ind[0]);
                     else if (ind[1].contains("green") && Integer.parseInt(ind[0]) > green)
-                        possible = false;
+                        green = Integer.parseInt(ind[0]);
                     else if (ind[1].contains("blue") && Integer.parseInt(ind[0]) > blue)
-                        possible = false;
+                        blue = Integer.parseInt(ind[0]);
                 }
+
+                gameSum = red * green * blue;
             }
+
+            sum += gameSum;
         }
         System.out.println(sum);
         scanner.close();
