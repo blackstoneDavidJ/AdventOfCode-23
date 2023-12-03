@@ -1,4 +1,4 @@
-package org.example;
+package advent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
