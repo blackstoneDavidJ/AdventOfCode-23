@@ -16,7 +16,6 @@ public class C1P2
         int total = 0;
         while(scanner.hasNextLine()) {
             String line = findNumbers(scanner.nextLine());
-
             line = line.replaceAll("[^\\d.]", "");
             int score = 0;
             if (line.length() == 1) {
@@ -31,7 +30,6 @@ public class C1P2
                 score = Integer.parseInt(str.toString());
             }
             total += score;
-            System.out.println(line);
         }
         scanner.close();
         System.out.println(total);
@@ -51,28 +49,18 @@ public class C1P2
         map.put(9,"nine");
         for (int i = 1; i <= 9; i++) {
             String currStr = map.get(i);
-            if (line.contains(currStr))
-                pairs.add(new Pair(i,line.indexOf(currStr)));
+            if (line.contains(currStr)) {
+                int index = -1;
+                while ((index = line.indexOf(currStr, index + 1)) != -1) {
+                    pairs.add(new Pair(i, index));
+                }
+            }
         }
         StringBuilder str = new StringBuilder(line);
         for (Pair pair : pairs) {
-            str.setCharAt(pair.index, Character.forDigit(pair.num, 10));
+            str.setCharAt(pair.i, Character.forDigit(pair.n, 10));
         }
-        System.out.println(str);
-        System.out.println("---");
-        return line;
+        return str.toString();
     }
-    private static class Pair {
-        public int num;
-        public int index;
-
-        public Pair(int num, int index) {
-            this.num = num;
-            this.index = index;
-        }
-
-        public String toString() {
-            return num +" " +index;
-        }
-    }
+    private static class Pair { int n,i; public Pair(int n, int i) { this.n = n; this.i = i; } }
 }
