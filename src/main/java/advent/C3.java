@@ -15,6 +15,7 @@ public class C3
         ArrayList<String> lines = new ArrayList<>();
         while(scanner.hasNextLine()) {
             String line = scanner.nextLine();
+            System.out.println(line);
             lines.add(line);
         }
 
@@ -46,9 +47,12 @@ public class C3
                         else notDigit = true;
                     }
                     int num = Integer.parseInt(numStr.toString());
-                    if (hasAdjacent(chars, i, j, numStr.length()-1)) {
-                        System.out.println(num);
-                        total += num;
+                    for (int t = (y-numStr.length()-1); t < (y-1); t++) {
+                        if (hasAdjacent(chars, i, t)) {
+                            //System.out.println(num);
+                            total += num;
+                            break;
+                        }
                     }
                     j = y-1;
                 }
@@ -57,10 +61,10 @@ public class C3
         return total;
     }
 
-    private static boolean hasAdjacent(char[][] chars, int i, int j, int j2) {
+    private static boolean hasAdjacent(char[][] chars, int i, int j) {
         int rows = chars.length;
         int cols = chars[0].length;
-        char[] symbols = {'#', '#','$', '@', '%', '&', '/', '!','+','-','*'};
+        char[] symbols = {'#', '#','$', '@', '%', '&', '/', '!','+','-','=','*','|',';',':','^','(',')'};
         int[][] directions = {
                 {-1, 0}, {1, 0}, {0, -1}, {0, 1},   // Up, Down, Left, Right
                 {-1, -1}, {-1, 1}, {1, -1}, {1, 1}  // Diagonals
