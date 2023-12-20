@@ -13,16 +13,33 @@ public class C5 {
         String[] labels = {"seed-to-soil","soil-to-fertilizer", "fertilizer-to-water",
                 "water-to-light", "light-to-temperature", "temperature-to-humidity", "humidity-to-location"};
         HashMap<String, List<String>> map = makeMapHelper(labels, scanner);
-        long[] results = map.get("seeds").stream().mapToLong(Long::parseLong).toArray();
+        long[] rts = map.get("seeds").stream().mapToLong(Long::parseLong).toArray();
+        Pair[] results = Arrays.stream(rts).mapToObj(Pair::new).toArray(Pair[]::new);
         for(String label : labels) {
-            results = getNextMapResults(results, map, label);
+            Pair[] newResults = getNextMapResults(results, map, label);
+            for(Pair p : newResults) {
+                System.out.println(p.n);
+                p.solved = false;
+            }
+            System.out.println("--");
         }
-        for(long l : results) {
-            System.out.println(l);
-        }
+
+        System.out.println(Arrays.stream(results));
     }
-    private static long[] getNextMapResults(long[] input, HashMap<String, List<String>> map, String label) {
-        //solve this againnmnnnnnnnnnnnnnnnn!
+    private static Pair[] getNextMapResults(Pair[] input, HashMap<String, List<String>> map, String label) {
+        List<String> list = map.get(label);
+        for(String param : list) {
+            long[] p = Arrays.stream(param.split(" ")).mapToLong(Long::parseLong).toArray();
+            for(int i = 0; i < input.length; i++) {
+                long seed = input[i].n;
+                long offset = seed - p[1];
+                if (seed >= p[1] && offset <= p[2] && !input[i].solved) {
+                    input[i].n = p[0] + offset;
+                    input[i].solved = true;
+                }
+            }
+        }
+        return input;
     }
 
     private static HashMap<String, List<String>> makeMapHelper(String[] labels, Scanner scanner) {
@@ -50,5 +67,7 @@ public class C5 {
             if (!line.isEmpty()) list.add(line);
         }
         return list;
+    }
+    private static class Pair { boolean solved; long n; Pair(long n) { this.n = n; }
     }
 }
